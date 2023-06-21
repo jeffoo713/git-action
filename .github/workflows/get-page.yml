@@ -20,7 +20,7 @@ jobs:
         run: |
           PAIRS=$(echo -n '${{ steps.confPage.outputs.response }}' | jq -r '.results[] | "\(.content.id) \(.url | split("/") | .[2])"')
           echo "Pairs: $PAIRS"
-          for pair in $PAIRS; do
+          echo "$PAIRS" | while read -r pair; do
             read id spaceID <<< $pair
             echo "ID: $id, SpaceID: $spaceID"
           done
