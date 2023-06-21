@@ -33,7 +33,7 @@ jobs:
 
             page_ids=$(echo $PAGES | jq -r -c '.results[].content.id')
             
-            echo $page_ids
+            echo "PAGE IDS: $page_ids"
 
             for page_id in $page_ids; do
               echo "PAGE ID: $page_id"
