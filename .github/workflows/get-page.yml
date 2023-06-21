@@ -33,10 +33,7 @@ jobs:
                   "status": "current",
                   "title": "Created by Jeff",
                   "parentId": $page_id,
-                  "body": {
-                    "representation": "storage",
-                    "value": "hackday titleeee unescaped"
-                  }
+                  "body": {"representation": "storage","value": "hackday titleeee unescaped"}
                 }'"
               )
               echo "CREATE PAGE: $CREATE_PAGE"
