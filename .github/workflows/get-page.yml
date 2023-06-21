@@ -18,26 +18,5 @@ jobs:
             password: ${{ secrets.CONFLUENCE_SAM_TOKEN }}
       - name: Extract pairs
         run: |
-          PAIRS=$(echo -n '${{ steps.confPage.outputs.response }}' | jq -r '.results[] | "\(.content.id) \(.url | split("/") | .[2])"')
-          echo "Pairs: $PAIRS"
-          echo "$PAIRS" | while read -r pair; do
-            read PAGE_ID SPACE_ID <<< $pair
-            echo "PAGE_ID: $PAGE_ID, SPACE_ID: $SPACE_ID"
-
-            curl --request POST \
-              --url 'https://risepeople.atlassian.net/wiki/api/v2/pages' \
-              --user '${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }}' \
-              --header 'Accept: application/json' \
-              --header 'Content-Type: application/json' \
-              --data '{
-              "spaceId": $SPACE_ID,
-              "status": "current",
-              "title": "PAGE FROM CODE CHANGE",
-              "parentId": $PAGE_ID,
-              "body": {
-                "representation": "storage",
-                "value": "child page is created from github action under parent ID: $page_id"
-              }
-            }'
-
-          done
+          CONFLUENCE_PAGE_IDS=$(echo -n '${{ steps.confPage.outputs.response }}' | jq -r '.results[].content.id')
+          echo "PAGE_IDS: $CONFLUENCE_PAGE_IDS"
