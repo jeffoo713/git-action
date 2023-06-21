@@ -32,7 +32,7 @@ jobs:
               --header 'Accept: application/json')
 
             for page in $PAGES; do
-              echo page
+              echo $page
             done
           done
 
