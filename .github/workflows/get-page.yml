@@ -23,6 +23,6 @@ jobs:
           echo "CONFLUENCE_PAGE_IDS=$CONFLUENCE_PAGE_IDS" >> $GITHUB_ENV
       - name: Iterate Page IDs
         run: |
-          chmod +x ./.github/scripts/create_child_page.sh  
+          echo "current path: $ls"
           ./.github/scripts/createpage.sh $CONFLUENCE_PAGE_IDS
         shell: bash
