@@ -24,4 +24,3 @@ jobs:
              RES=$(curl -s -u ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} https://risepeople.atlassian.net/wiki/rest/api/content/$page_id | jq -r '.space.id')
              echo "RESPONSE: $RES"
             done
-
