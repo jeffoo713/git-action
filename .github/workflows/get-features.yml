@@ -21,8 +21,20 @@ jobs:
             | jq -r ".body")
           echo "PR Description: $PR_DESCRIPTION"
           FEATURES=$(echo "$PR_DESCRIPTION" | sed -n 's/^.*feature: \(.*\)$/\1/p' | tr ',' '\n')
+
           for feature in $FEATURES; do
             echo "Feature: $feature"
+
+            PAGES=%(curl --request GET \
+              --url "https://your-domain.atlassian.net/wiki/rest/api/search?cql=label=$feature" \
+              --user ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} \
+              --header 'Accept: application/json')
+
+            for page in $PAGES; do
+              echo page
+            done
           done
+
+          
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
