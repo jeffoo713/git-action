@@ -43,16 +43,16 @@ jobs:
               CREATE_PAGE=$(curl --request POST --url 'https://risepeople.atlassian.net/wiki/api/v2/pages' \
                 --user ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} \
                 --header 'Content-Type: application/json' \
-                --data '{
-                  "spaceId": "'$space_id'",
-                  "status": "current",
-                  "title": "'$feature' changed! from '$COMMIT_MESSAGE'",
-                  "parentId": "'$page_id'",
-                  "body": {
-                    "representation": "storage",
-                    "value": "'$feature' changed! from '$COMMIT_MESSAGE'"
+                --data "{
+                  \"spaceId\": \"$space_id\",
+                  \"status\": \"current\",
+                  \"title\": \"$feature changed! from $COMMIT_MESSAGE\",
+                  \"parentId\": \"$page_id\",
+                  \"body\": {
+                    \"representation\": \"storage\",
+                    \"value\": \"$feature changed! from $COMMIT_MESSAGE\"
                   }
-                }'
+                }"
               )
               echo "CREATE PAGE: $CREATE_PAGE"
             done
