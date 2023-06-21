@@ -28,13 +28,13 @@ jobs:
                 --user ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} \
                 --header 'Content-Type: application/json' \
                 --data "{
-                  "spaceId": $space_id,
-                  "status": "current",
-                  "title": "Created by Jeff",
-                  "parentId": $page_id,
-                  "body": {
-                    "representation": "storage",
-                    "value": "hackday titleeee unescaped"
+                  \"spaceId\": \"$space_id\",
+                  \"status\": \"current\",
+                  \"title\": \"Created by Jeff\",
+                  \"parentId\": \"$page_id\",
+                  \"body\": {
+                    \"representation\": \"storage\",
+                    \"value\": \"hackday titleeee unescaped\"
                   }
                 }"
               )
