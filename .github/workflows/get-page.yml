@@ -24,6 +24,7 @@ jobs:
               space_id=$(curl -s -u ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} https://risepeople.atlassian.net/wiki/rest/api/content/$page_id | jq -r '.space.id')
               echo "RESPONSE: $space_id"
 
+              echo "REQ BODY: '{"spaceId":$space_id,"status":"current","title":"Created by Jeff","parentId":$page_id,"body":{"representation":"storage","value":"hackday titleeee unescaped"}}'"
               CREATE_PAGE=$(curl --request POST --url 'https://risepeople.atlassian.net/wiki/api/v2/pages' \
                 --user ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} \
                 --header 'Content-Type: application/json' \
