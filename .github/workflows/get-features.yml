@@ -24,7 +24,7 @@ jobs:
           echo "Features: $FEATURES"
 
           for feature in $FEATURES; do
-            echo "https://risepeople.atlassian.net/wiki/rest/api/search?expand=metadata.labels&cql=label=$feature"
+            echo "feature name: $feature"
 
             PAGES=$(curl --request GET \
               --url "https://risepeople.atlassian.net/wiki/rest/api/search?expand=metadata.labels&cql=label=%22$feature%22" \
@@ -46,11 +46,11 @@ jobs:
                 --data '{
                   "spaceId": "'$space_id'",
                   "status": "current",
-                  "title": "my_feature changed! from my_own_commit",
+                  "title": "'$feature' changed! from '$COMMIT_MESSAGE'",
                   "parentId": "'$page_id'",
                   "body": {
                     "representation": "storage",
-                    "value": "my_feature changed! from my_own_commit"
+                    "value": "'$feature' changed! from '$COMMIT_MESSAGE'"
                   }
                 }'
               )
