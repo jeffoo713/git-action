@@ -34,6 +34,28 @@ jobs:
             page_ids=$(echo $PAGES | jq -r -c '.results[].content.id')
             
             echo $page_ids
+
+            for page_id in $page_ids; do
+              echo "PAGE ID: $page_id"
+              space_id=$(curl -s -u ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} https://risepeople.atlassian.net/wiki/rest/api/content/$page_id | jq -r '.space.id')
+              echo "SPACE ID: $space_id"
+
+              CREATE_PAGE=$(curl --request POST --url 'https://risepeople.atlassian.net/wiki/api/v2/pages' \
+                --user ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} \
+                --header 'Content-Type: application/json' \
+                --data '{
+                  "spaceId": "'$space_id'",
+                  "status": "current",
+                  "title": "$feature changed! from $COMMIT_MESSAGE",
+                  "parentId": "'$page_id'",
+                  "body": {
+                    "representation": "storage",
+                    "value": "$feature changed! from $COMMIT_MESSAGE"
+                  }
+                }'
+              )
+              echo "CREATE PAGE: $CREATE_PAGE"
+            done
           done
 
           
