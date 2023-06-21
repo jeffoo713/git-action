@@ -5,12 +5,18 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-
+  get-confluence-page:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Get confluence page by label
-      run: |
-        RESULT=$(curl -s -H "Authorization: Basic $(echo -n ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} | base64)" -X GET "https://risepeople.atlassian.net/wiki/rest/api/search?expand=metadata.labels&cql=label=%22hack-day-test%22")
-        echo $RESULT
+      - name: Get Page by Label
+        id: confPage
+        uses: fjogeleit/http-request-action@v1
+        with:
+            url: 'https://risepeople.atlassian.net/wiki/rest/api/search?expand=metadata.labels&cql=label="hack-day-test"'
+            method: 'GET'
+            username: ${{ secrets.CONFLUENCE_SAM_USER }}
+            password: ${{ secrets.CONFLUENCE_SAM_TOKEN }}
+      - name: print res
+        run: |
+          CONFLUENCE_PAGES=$(${{ toJson(steps.confPage.outputs.response) }} | jq)
+          echo $CONFLUENCE_PAGES
