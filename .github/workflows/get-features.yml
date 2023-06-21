@@ -31,9 +31,9 @@ jobs:
               --user ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} \
               --header 'Accept: application/json')
 
-            for page in $PAGES; do
-              echo $page
-            done
+            page_ids=$(echo $PAGES | jq -r -c '.results[].content.id')
+            
+            echo $page_ids
           done
 
           
