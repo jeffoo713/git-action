@@ -12,5 +12,5 @@ jobs:
     steps:
     - name: Get confluence page by label
       run: |
-        curl -i -H "Authorization: Basic $(echo -n ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} | base64)" \
-          -X GET "https://risepeople.atlassian.net/wiki/rest/api/search?expand=metadata.labels&cql=label=%22hack-day-test%22"
+        RESULT=$(curl -s -H "Authorization: Basic $(echo -n ${{ secrets.CONFLUENCE_USER }}:${{ secrets.CONFLUENCE_TOKEN }} | base64)" -X GET "https://risepeople.atlassian.net/wiki/rest/api/search?expand=metadata.labels&cql=label=%22hack-day-test%22")
+        echo RESULT
