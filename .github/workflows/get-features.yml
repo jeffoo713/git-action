@@ -26,7 +26,7 @@ jobs:
           for feature in $FEATURES; do
             echo "https://risepeople.atlassian.net/wiki/rest/api/search?cql=label=$feature"
 
-            PAGES=%(curl --request GET \
+            PAGES=$(curl --request GET \
               --url "https://risepeople.atlassian.net/wiki/rest/api/search?cql=label=$feature" \
               --user ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} \
               --header 'Accept: application/json')
