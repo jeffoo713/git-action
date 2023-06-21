@@ -19,4 +19,22 @@ jobs:
       - name: print res
         run: |
           CONFLUENCE_PAGE_IDS=$(echo '${{ steps.confPage.outputs.response }}' | jq -r '[.results[].content.id]')
-          echo $CONFLUENCE_PAGE_IDS
+          echo "CONFLUENCE_PAGE_IDS: $CONFLUENCE_PAGE_IDS"
+          for page_id in $CONFLUENCE_PAGE_IDS; do
+            echo "Createing page under page ID: $page_id"
+            curl --request POST \
+              --url 'https://risepeople.atlassian.net/wiki/api/v2/pages' \
+              --user '${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }}' \
+              --header 'Accept: application/json' \
+              --header 'Content-Type: application/json' \
+              --data '{
+              "spaceId": "<string>",
+              "status": "current",
+              "title": "PAGE FROM CODE CHANGE",
+              "parentId": $page_id,
+              "body": {
+                "representation": "storage",
+                "value": "child page is created from github action under parent ID: $$page_id"
+              }
+            }'
+          done
