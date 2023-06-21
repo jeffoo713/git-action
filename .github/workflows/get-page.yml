@@ -18,5 +18,5 @@ jobs:
             password: ${{ secrets.CONFLUENCE_SAM_TOKEN }}
       - name: print res
         run: |
-          CONFLUENCE_PAGES=$(${{ toJson(steps.confPage.outputs.response) }} | jq)
-          echo $CONFLUENCE_PAGES
+          CONFLUENCE_PAGE_ID=$(${{ toJson(steps.confPage.outputs.response) }} | jq -r ".result.content.id")
+          echo $CONFLUENCE_PAGE_ID
