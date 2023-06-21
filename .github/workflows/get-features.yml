@@ -21,12 +21,13 @@ jobs:
             | jq -r ".body")
           echo "PR Description: $PR_DESCRIPTION"
           FEATURES=$(echo "$PR_DESCRIPTION" | sed -n 's/^.*feature: \(.*\)$/\1/p' | tr ',' '\n')
+          echo "Features: $FEATURES"
 
           for feature in $FEATURES; do
-            echo "Feature: $feature"
+            echo "https://risepeople.atlassian.net/wiki/rest/api/search?cql=label=$feature"
 
             PAGES=%(curl --request GET \
-              --url "https://your-domain.atlassian.net/wiki/rest/api/search?cql=label=$feature" \
+              --url "https://risepeople.atlassian.net/wiki/rest/api/search?cql=label=$feature" \
               --user ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} \
               --header 'Accept: application/json')
 
