@@ -38,5 +38,6 @@ jobs:
                     "value": "hackday titleeee unescaped"
                   }
                 }'
+              )
               echo "CREATE PAGE: $CREATE_PAGE"
             done
