@@ -21,7 +21,7 @@ jobs:
             page_ids=$(echo '${{ steps.confPage.outputs.response }}' | jq -r -c '.results[].content.id')
             for page_id in $page_ids; do
              echo "PAGE: $page_id"
-             RES=$(curl -s -u ${{ secrets.CONFLUENCE_USER }}:${{ secrets.CONFLUENCE_TOKEN }} https://risepeople.atlassian.net/wiki/rest/api/content/$page_id | jq -r '.space.id')
+             RES=$(curl -s -u ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} https://risepeople.atlassian.net/wiki/rest/api/content/$page_id | jq -r '.space.id')
              echo "RESPONSE: $RES"
             done
 
