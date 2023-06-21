@@ -16,13 +16,21 @@ jobs:
             method: 'GET'
             username: ${{ secrets.CONFLUENCE_SAM_USER }}
             password: ${{ secrets.CONFLUENCE_SAM_TOKEN }}
-      - name: Extract pairs
+      - name: print res
         run: |
-          CONFLUENCE_PAGE_IDS=$(echo -n '${{ steps.confPage.outputs.response }}' | jq -r '.results[].content.id' | tr '\n' ',')
-          echo "PAGE_IDS: $CONFLUENCE_PAGE_IDS"
-          echo "CONFLUENCE_PAGE_IDS=$CONFLUENCE_PAGE_IDS" >> $GITHUB_ENV
-      - name: Iterate Page IDs
-        run: |
-          echo "current path: $ls"
-          ./.github/scripts/createpage.sh $CONFLUENCE_PAGE_IDS
-        shell: bash
+            CONFLUENCE_PAGES=$(echo '${{ steps.confPage.outputs.response }}' | jq -r -c '.results[].content.id')
+            for conf in $CONFLUENCE_PAGES; do
+             echo "PAGE: $conf"
+             RES=$(curl -s -u ${{ secrets.CONFLUENCE_USER }}:${{ secrets.CONFLUENCE_TOKEN }} https://risepeople.atlassian.net/wiki/rest/api/content/$conf | jq -r '.space.id')
+             echo "RESPONSE: $RES"
+             
+            #  echo '{"spaceId":$(echo $RES),"status":"current","title":"Commit messageasdfdfs ${RES} ${conf}","parentId":${conf},"body":{"representation":"storage","value":"hackday title unescaped"}}'
+            #  CREATE_PAGE=$(curl -i --location 'https://risepeople.atlassian.net/wiki/api/v2/pages' \
+            #   -u ${{ secrets.CONFLUENCE_USER }}:${{ secrets.CONFLUENCE_TOKEN }} \
+            #   --header 'Content-Type: application/json' \
+            #   --data '{"spaceId":$RES,"status":"current","title":"Commit messageasdfdfs $RES $conf","parentId":$conf,"body":{"representation":"storage","value":"hackday title unescaped"}}')
+            #   echo "CREATE PAGE: $CREATE_PAGE"
+            done
+            # PAGESA=$(echo $CONFLUENCE_PAGES | tr ' ' ',')
+            echo "CONFPAG=$(echo $PAGESA)" >> $GITHUB_ENV
+
