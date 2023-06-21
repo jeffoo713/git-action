@@ -20,3 +20,6 @@ jobs:
         run: |
           CONFLUENCE_PAGE_IDS=$(echo -n '${{ steps.confPage.outputs.response }}' | jq -r '.results[].content.id' | tr '\n' ',')
           echo "PAGE_IDS: $CONFLUENCE_PAGE_IDS"
+          echo "CONFLUENCE_PAGE_IDS=$CONFLUENCE_PAGE_IDS" >> $GITHUB_ENV
+      - name: Iterate Page IDs
+        run: ./create_child_page.sh $CONFLUENCE_PAGE_IDS
