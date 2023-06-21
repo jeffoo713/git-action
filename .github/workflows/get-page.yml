@@ -30,7 +30,7 @@ jobs:
               --header 'Accept: application/json' \
               --header 'Content-Type: application/json' \
               --data '{
-              "spaceId": SPACE_ID,
+              "spaceId": $SPACE_ID,
               "status": "current",
               "title": "PAGE FROM CODE CHANGE",
               "parentId": $PAGE_ID,
