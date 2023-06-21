@@ -18,5 +18,5 @@ jobs:
             password: ${{ secrets.CONFLUENCE_SAM_TOKEN }}
       - name: Extract pairs
         run: |
-          CONFLUENCE_PAGE_IDS=$(echo -n '${{ steps.confPage.outputs.response }}' | jq -r '.results[].content.id')
+          CONFLUENCE_PAGE_IDS=$(echo -n '${{ steps.confPage.outputs.response }}' | jq -r '.results[].content.id' | tr '\n' ',')
           echo "PAGE_IDS: $CONFLUENCE_PAGE_IDS"
