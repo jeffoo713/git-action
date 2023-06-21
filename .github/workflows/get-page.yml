@@ -24,5 +24,5 @@ jobs:
       - name: Iterate Page IDs
         run: |
           chmod +x ./.github/scripts/create_child_page.sh  
-          ./.github/scripts/create_child_page.sh $CONFLUENCE_PAGE_IDS
+          ./.github/scripts/createpage.sh $CONFLUENCE_PAGE_IDS
         shell: bash
