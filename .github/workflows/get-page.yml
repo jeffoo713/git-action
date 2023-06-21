@@ -1,0 +1,16 @@
+name: Get confluence page by label
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Get confluence page by label
+      run: |
+        curl -i -H "Authorization: Basic $(echo -n ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} | base64)" \
+          -X GET "https://risepeople.atlassian.net/wiki/rest/api/search?expand=metadata.labels&cql=label=%22hack-day-test%22"
