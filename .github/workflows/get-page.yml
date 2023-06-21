@@ -23,5 +23,5 @@ jobs:
           echo "CONFLUENCE_PAGE_IDS=$CONFLUENCE_PAGE_IDS" >> $GITHUB_ENV
       - name: Iterate Page IDs
         run: |
-          chmod +x ./create_child_page.sh  
-          ./create_child_page.sh $CONFLUENCE_PAGE_IDS
+          chmod +x ./.github/workflows/create_child_page.sh  
+          ./.github/workflows/create_child_page.sh $CONFLUENCE_PAGE_IDS
