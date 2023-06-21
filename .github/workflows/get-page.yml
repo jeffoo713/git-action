@@ -18,7 +18,7 @@ jobs:
             password: ${{ secrets.CONFLUENCE_SAM_TOKEN }}
       - name: print res
         run: |
-          CONFLUENCE_PAGE_IDS=$(echo '${{ steps.confPage.outputs.response }}' | jq -r '[.results[].content.id]')
+          CONFLUENCE_PAGE_IDS=$(echo -n '${{ steps.confPage.outputs.response }}' | jq -r '[.results[].content.id]')
           echo "CONFLUENCE_PAGE_IDS: $CONFLUENCE_PAGE_IDS"
           for page_id in $CONFLUENCE_PAGE_IDS; do
             echo "Createing page under page ID: $page_id"
