@@ -23,5 +23,5 @@ jobs:
           echo "CONFLUENCE_PAGE_IDS=$CONFLUENCE_PAGE_IDS" >> $GITHUB_ENV
       - name: Iterate Page IDs
         run: |
-          echo pwd  
+          echo $pwd  
           echo $CONFLUENCE_PAGE_IDS
