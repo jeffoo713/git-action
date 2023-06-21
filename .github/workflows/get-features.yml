@@ -26,7 +26,7 @@ jobs:
           for feature in $FEATURES; do
             echo "feature name: $feature"
 
-            PAGES=$(curl --request GET \
+            PAGES=$(curl -s --request GET \
               --url "https://risepeople.atlassian.net/wiki/rest/api/search?expand=metadata.labels&cql=label=%22$feature%22" \
               --user ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} \
               --header 'Accept: application/json')
@@ -37,10 +37,10 @@ jobs:
 
             for page_id in $page_ids; do
               echo "PAGE ID: $page_id"
-              space_id=$(curl -s -u ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} https://risepeople.atlassian.net/wiki/rest/api/content/$page_id | jq -r '.space.id')
+              space_id=$(curl -s -u ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} --location "https://risepeople.atlassian.net/wiki/rest/api/content/$page_id" | jq -r '.space.id')
               echo "SPACE ID: $space_id"
 
-              CREATE_PAGE=$(curl --request POST --url 'https://risepeople.atlassian.net/wiki/api/v2/pages' \
+              CREATE_PAGE=$(curl -s --request POST --url 'https://risepeople.atlassian.net/wiki/api/v2/pages' \
                 --user ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} \
                 --header 'Content-Type: application/json' \
                 --data '{
