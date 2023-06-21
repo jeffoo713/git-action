@@ -16,9 +16,9 @@ jobs:
             method: 'GET'
             username: ${{ secrets.CONFLUENCE_SAM_USER }}
             password: ${{ secrets.CONFLUENCE_SAM_TOKEN }}
-      - name: print res
+      - name: Extract pairs
         run: |
-          PAIRS=$(echo -n '${{ steps.confPage.outputs.response }}' | jq -r '.result[] | "\(.content.id) \(.url | split("/") | .[2])"')
+          PAIRS=$(echo -n '${{ steps.confPage.outputs.response }}' | jq -r '.results[] | "\(.content.id) \(.url | split("/") | .[2])"')
           echo "Pairs: $PAIRS"
           for pair in $PAIRS; do
             read id spaceID <<< $pair
