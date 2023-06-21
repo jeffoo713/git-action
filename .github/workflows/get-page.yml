@@ -32,5 +32,5 @@ jobs:
             #   echo "CREATE PAGE: $CREATE_PAGE"
             done
             # PAGESA=$(echo $CONFLUENCE_PAGES | tr ' ' ',')
-            echo "CONFPAG=$(echo $PAGESA)" >> $GITHUB_ENV
+            # echo "CONFPAG=$(echo $PAGESA)" >> $GITHUB_ENV
 
