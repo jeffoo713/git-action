@@ -50,7 +50,7 @@ jobs:
                   "parentId": "'$page_id'",
                   "body": {
                     "representation": "storage",
-                    "value": "'$feature' changed! from '$COMMIT_MESSAGE'"
+                    "value": "my feature changed! from some commit"
                   }
                 }'
               )
