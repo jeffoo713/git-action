@@ -34,7 +34,7 @@ jobs:
               --header 'Accept: application/json')
 
             page_ids=$(echo $PAGES | jq -r -c '.results[].content.id')
-            
+
             echo "PAGE IDS: $page_ids"
 
             for page_id in $page_ids; do
