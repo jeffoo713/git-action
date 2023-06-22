@@ -35,8 +35,6 @@ jobs:
             
             echo "PAGE IDS: $page_ids"
 
-            message=$(echo $COMMIT_MESSAGE | tr '\n' ' ')
-
             for page_id in $page_ids; do
               echo "PAGE ID: $page_id"
               space_id=$(curl -s -u ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} --location "https://risepeople.atlassian.net/wiki/rest/api/content/$page_id" | jq -r '.space.id')
