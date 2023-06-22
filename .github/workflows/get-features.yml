@@ -68,6 +68,3 @@ jobs:
               echo $CREATE_PAGE
             done
           done
-          
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
