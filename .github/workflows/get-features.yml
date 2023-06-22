@@ -54,6 +54,7 @@ jobs:
                   }
                 }"
               )
+              echo $CREATE_PAGE
             done
           done
           
