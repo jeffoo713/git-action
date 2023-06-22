@@ -5,7 +5,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  get-features:
+  update-workflow:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
