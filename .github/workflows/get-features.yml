@@ -49,7 +49,7 @@ jobs:
                   \"parentId\": \"$page_id\",
                   \"body\": {
                     \"representation\": \"storage\",
-                    \"value\": \"$feature updated! $PR_DESCRIPTION_JSON \"
+                    \"value\": \"$feature updated! \" $PR_DESCRIPTION_JSON
                   }
                 }"
               )
