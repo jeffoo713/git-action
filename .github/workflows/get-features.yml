@@ -46,11 +46,11 @@ jobs:
                 --data "{
                   \"spaceId\": \"$space_id\",
                   \"status\": \"current\",
-                  \"title\": \"$feature changed! from $page_id\",
+                  \"title\": \"$feature changed! from jeff $COMMIT_MESSAGE\",
                   \"parentId\": \"$page_id\",
                   \"body\": {
                     \"representation\": \"storage\",
-                    \"value\": \"$feature changed! from $page_id\"
+                    \"value\": \"$feature changed! from jeff $COMMIT_MESSAGE\"
                   }
                 }"
               )
