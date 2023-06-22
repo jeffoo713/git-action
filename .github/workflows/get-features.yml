@@ -48,11 +48,11 @@ jobs:
                 --data "{
                   \"spaceId\": \"$space_id\",
                   \"status\": \"current\",
-                  \"title\": \"$feature changed! from PR # $PR_NUMBER $page_id",
+                  \"title\": \"$feature changed! from PR # $PR_NUMBER $page_id\",
                   \"parentId\": \"$page_id\",
                   \"body\": {
                     \"representation\": \"storage\",
-                    \"value\": \"$feature changed! from PR # $PR_NUMBER $page_id"
+                    \"value\": \"$feature changed! from PR # $PR_NUMBER $page_id\"
                   }
                 }"
               )
