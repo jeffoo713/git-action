@@ -44,10 +44,9 @@ jobs:
 
               HTML_CONTENT='<div style="width: 65%; display: flex; flex-direction: column; margin: 0 auto;">
                 <h2>'"$feature"' updated from '"$AUTHOR"'!</h2>
-                <h3>PR Details: <a>$PR_URL</a></h3>
                 <p>'"$PR_DESCRIPTION"'</p>
                 <br/>
-                <a href="$PR_URL" target="_blank">Link: $PR_URL</a>
+                <span>Link: <a href="'"$PR_URL"'" target="_blank">'"$PR_URL"'</a></span>
               </div>'
               HTML_CONTENT_JSON=$(echo "$HTML_CONTENT" | jq -Rs .)
 
