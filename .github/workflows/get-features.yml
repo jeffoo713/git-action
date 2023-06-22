@@ -47,7 +47,7 @@ jobs:
                 <h3>PR Details: <a>$PR_URL</a></h3>
                 <p>'"$PR_DESCRIPTION"'</p>
                 <br/>
-                <a href=$PR_URL target="_blank">Link: $PR_URL</a>
+                <a href="$PR_URL" target="_blank">Link: $PR_URL</a>
               </div>'
               HTML_CONTENT_JSON=$(echo "$HTML_CONTENT" | jq -Rs .)
 
