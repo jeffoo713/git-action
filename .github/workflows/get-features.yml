@@ -38,12 +38,11 @@ jobs:
               space_id=$(curl -s -u ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} --location "https://risepeople.atlassian.net/wiki/rest/api/content/$page_id" | jq -r '.space.id')
               echo "SPACE ID: $space_id"
 
-              HTML_CONTENT="
-                <div style="width: 65%; display: flex; flex-direction: column; margin: 0 auto;">
-                  <h2>[UPDATE] $feature updated from $AUTHOR!</h2>
-                  <h3>PR Details</h3>
-                  <p>$PR_DESCRIPTION</p>
-                </div>"
+              HTML_CONTENT='<div style="width: 65%; display: flex; flex-direction: column; margin: 0 auto;">
+                <h2>[UPDATE] '"$feature"' updated from '"$AUTHOR"'!</h2>
+                <h3>PR Details</h3>
+                <p>'"$PR_DESCRIPTION"'</p>
+              </div>'
               HTML_CONTENT_JSON=$(echo "$HTML_CONTENT" | jq -Rs .)
 
               CREATE_PAGE=$(curl --request POST --url 'https://risepeople.atlassian.net/wiki/api/v2/pages' \
