@@ -17,11 +17,15 @@ jobs:
           PR_NUMBER=$(echo "$COMMIT_MESSAGE" | grep -oP 'Merge pull request #\K\d+')
           AUTHOR=$(echo "$COMMIT_MESSAGE" | grep -oP '(?<=from )[^/]+' )
           echo "PR number: $PR_NUMBER"
-          PR_DESCRIPTION=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -X GET https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER \
-            | jq -r ".body")
-          echo "PR Description: $PR_DESCRIPTION"
+
+          PR=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -X GET https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER)
+          PR_DESCRIPTION=$(echo $PR | jq -r ".body")
+          PR_URL=$(echo $PR | jq -r ".html_url")
           FEATURES=$(echo "$PR_DESCRIPTION" | sed -n 's/^.*feature: \(.*\)$/\1/p' | tr ',' '\n')
+
+          echo "PR Description: $PR_DESCRIPTION"
+          echo "PR_URL: $PR_URL"
 
           for feature in $FEATURES; do
             PAGES=$(curl -s --request GET \
@@ -39,9 +43,11 @@ jobs:
               echo "SPACE ID: $space_id"
 
               HTML_CONTENT='<div style="width: 65%; display: flex; flex-direction: column; margin: 0 auto;">
-                <h2>[UPDATE] '"$feature"' updated from '"$AUTHOR"'!</h2>
-                <h3>PR Details</h3>
+                <h2>'"$feature"' updated from '"$AUTHOR"'!</h2>
+                <h3>PR Details: <a>$PR_URL</a></h3>
                 <p>'"$PR_DESCRIPTION"'</p>
+                <br/>
+                <a href=$PR_URL target="_blank">Link: $PR_URL</a>
               </div>'
               HTML_CONTENT_JSON=$(echo "$HTML_CONTENT" | jq -Rs .)
 
@@ -51,7 +57,7 @@ jobs:
                 --data "{
                   \"spaceId\": \"$space_id\",
                   \"status\": \"current\",
-                  \"title\": \"$feature updated! PR #$PR_NUMBER -$page_id \",
+                  \"title\": \"[UPDATE] $feature updated! PR #$PR_NUMBER -$page_id \",
                   \"parentId\": \"$page_id\",
                   \"body\": {
                     \"representation\": \"storage\",
