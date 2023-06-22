@@ -21,11 +21,8 @@ jobs:
             | jq -r ".body")
           echo "PR Description: $PR_DESCRIPTION"
           FEATURES=$(echo "$PR_DESCRIPTION" | sed -n 's/^.*feature: \(.*\)$/\1/p' | tr ',' '\n')
-          echo "Features: $FEATURES"
 
           for feature in $FEATURES; do
-            echo "feature name: $feature"
-
             PAGES=$(curl -s --request GET \
               --url "https://risepeople.atlassian.net/wiki/rest/api/search?expand=metadata.labels&cql=label=%22$feature%22" \
               --user ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} \
@@ -40,7 +37,7 @@ jobs:
               space_id=$(curl -s -u ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} --location "https://risepeople.atlassian.net/wiki/rest/api/content/$page_id" | jq -r '.space.id')
               echo "SPACE ID: $space_id"
 
-              echo $COMMIT_MESSAGE
+              PR_DESCRIPTION_JSON=$(echo "$PR_DESCRIPTION" | jq -Rs .)
 
               CREATE_PAGE=$(curl --request POST --url 'https://risepeople.atlassian.net/wiki/api/v2/pages' \
                 --user ${{ secrets.CONFLUENCE_SAM_USER }}:${{ secrets.CONFLUENCE_SAM_TOKEN }} \
@@ -52,7 +49,7 @@ jobs:
                   \"parentId\": \"$page_id\",
                   \"body\": {
                     \"representation\": \"storage\",
-                    \"value\": \"$feature updated! from jeff PR #$PR_NUMBER \"
+                    \"value\": \"$feature updated! $PR_DESCRIPTION_JSON \"
                   }
                 }"
               )
