@@ -52,7 +52,7 @@ jobs:
                   \"parentId\": \"$page_id\",
                   \"body\": {
                     \"representation\": \"storage\",
-                    \"value\": \"$feature updated! from jeff $PR_DESCRIPTION \"
+                    \"value\": \"$feature updated! from jeff PR #$PR_NUMBER \"
                   }
                 }"
               )
