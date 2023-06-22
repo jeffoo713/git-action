@@ -56,7 +56,7 @@ jobs:
                 --data "{
                   \"spaceId\": \"$space_id\",
                   \"status\": \"current\",
-                  \"title\": \"[UPDATE] $feature updated! PR #$PR_NUMBER -$page_id \",
+                  \"title\": \"[UPDATE] $feature updated! PR #$PR_NUMBER - $page_id \",
                   \"parentId\": \"$page_id\",
                   \"body\": {
                     \"representation\": \"storage\",
